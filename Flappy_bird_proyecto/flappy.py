@@ -35,26 +35,25 @@ pygame.mixer.init()
 
 class Bird(pygame.sprite.Sprite):
 
-    def __init__(self):
+    def __init__(self,  x_pos, y_pos, images):
         #esta parte permite que use todas las funciones de pygame
         pygame.sprite.Sprite.__init__(self)
         #imagenes del pajaro (alas)
-        self.imagenes =  [pygame.image.load('assets/sprites/bluebird-upflap.png').convert_alpha(),
-                        pygame.image.load('assets/sprites/bluebird-midflap.png').convert_alpha(),
-                        pygame.image.load('assets/sprites/bluebird-downflap.png').convert_alpha()]
+        self.imagenes =  images
 
         self.velocidad = velocidad_salto
         
         #se busca cual de las tres imagenes del pajaro se deben de usar
         self.current_image = 0
-        self.image = pygame.image.load('assets/sprites/bluebird-upflap.png').convert_alpha()
+        self.image = images[self.current_image]
         self.mask = pygame.mask.from_surface(self.image)
+        
 
         #posicion y tamano del pajaro 
         self.rect = self.image.get_rect()
-        self.rect[0] = ancho_pantalla / 6 #se posiciona en un sexto del ancho
-        self.rect[1] = altura_pantalla / 2 #se posiciona en el medio de la altura pantalla
-
+        self.rect[0] = x_pos
+        self.rect[1] = y_pos
+        
     def update(self):
         #se crea una animacion de aleteo
         self.current_image = (self.current_image + 1) % 3
@@ -158,11 +157,28 @@ BACKGROUND = pygame.transform.scale(BACKGROUND, (ancho_pantalla, altura_pantalla
 #carga la imagen de inicio
 BEGIN_IMAGE = pygame.image.load('assets/sprites/message.png').convert_alpha()
 
+
+bird1_images = [
+    pygame.image.load('assets/sprites/bluebird-upflap.png').convert_alpha(),
+    pygame.image.load('assets/sprites/bluebird-midflap.png').convert_alpha(),
+    pygame.image.load('assets/sprites/bluebird-downflap.png').convert_alpha()
+]
+
+# Se cargan imagenes para un segundo pajaro
+bird2_images = [
+    pygame.image.load('assets/sprites/redbird-upflap.png').convert_alpha(),
+    pygame.image.load('assets/sprites/redbird-midflap.png').convert_alpha(),
+    pygame.image.load('assets/sprites/redbird-downflap.png').convert_alpha()
+]
+
+
 #crea un grupo para manejar distintos sprites que se van a utilizar para el pajaro
 bird_group = pygame.sprite.Group()
 #se crea una instancia de la clase Bird y se annade el pajaro
-bird = Bird()
-bird_group.add(bird)
+bird1 = Bird(ancho_pantalla / 6, altura_pantalla / 2, bird1_images)
+bird2 = Bird(ancho_pantalla / 6, altura_pantalla / 3, bird2_images)
+bird_group.add(bird1)
+bird_group.add(bird2)
 
 #crea un grupo para manejar distintos sprites para el suelo
 ground_group = pygame.sprite.Group()
@@ -211,11 +227,21 @@ while begin:
         if event.type == KEYDOWN:
             #se revisa si se presiona la flecha de arriba o el espaciado
             if event.key == K_SPACE or event.key == K_UP:
-                bird.bump()
+                bird1.bump()
                 pygame.mixer.music.load(wing)
                 pygame.mixer.music.play()
                 #el juego comienza
                 begin = False
+                #se revisa si se presiona W
+            if event.key == K_w:
+                bird2.bump()
+                pygame.mixer.music.load(wing)
+                pygame.mixer.music.play()
+                begin = False
+  
+                
+                
+                
     #dibuja los fondos
     screen.blit(BACKGROUND, (0, 0))
     screen.blit(BEGIN_IMAGE, (120, 150))
@@ -227,7 +253,9 @@ while begin:
         new_ground = Ground(ancho_suelo - 20)
         ground_group.add(new_ground)
 
-    bird.begin()
+#se inicia el primer y segundo pajaro
+    bird1.begin()
+    bird2.begin()
     ground_group.update()
 
     bird_group.draw(screen)
@@ -248,10 +276,17 @@ while True:
         if event.type == QUIT:
             pygame.quit()
         if event.type == KEYDOWN:
+            #controla el primer pajaro
             if event.key == K_SPACE or event.key == K_UP:
-                bird.bump()
+                bird1.bump()
                 pygame.mixer.music.load(wing)
                 pygame.mixer.music.play()
+                #controla el segundo pajaro
+            if event.key == K_w:
+                bird2.bump()
+                pygame.mixer.music.load(wing)
+                pygame.mixer.music.play()
+
 
     screen.blit(BACKGROUND, (0, 0))
 
@@ -276,7 +311,10 @@ while True:
     #CAMBIOS
     # Verifica si el pájaro pasó las tuberías
     for pipe in pipe_group:
-        if bird.rect.left > pipe.rect.right and not passed_pipe:
+        if bird1.rect.left > pipe.rect.right and not passed_pipe:
+            puntaje += 1
+            passed_pipe = True
+        if bird2.rect.left > pipe.rect.right and not passed_pipe:
             puntaje += 1
             passed_pipe = True
             
