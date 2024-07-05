@@ -113,7 +113,7 @@ class Ground(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         
         #se acomoda la imagen del suelo para que tenga las dimensiones necesarias
-        self.image = pygame.image.load('assets/sprites/base.png').convert_alpha()
+        self.image = pygame.image.load('assets/sprites/base1.png').convert_alpha()
         self.image = pygame.transform.scale(self.image, (ancho_suelo, altura_suelo))
 
         # se crea una mascara, asi si pega con el suelo el juego se detiene
@@ -172,9 +172,9 @@ bird1_images = [
 
 # Se cargan imagenes para un segundo pajaro
 bird2_images = [
-    pygame.image.load('assets/sprites/redbird-upflap.png').convert_alpha(),
-    pygame.image.load('assets/sprites/redbird-midflap.png').convert_alpha(),
-    pygame.image.load('assets/sprites/redbird-downflap.png').convert_alpha()
+    pygame.transform.scale(pygame.image.load('assets/sprites/bola-original.png').convert_alpha(), (34, 24)),
+    pygame.transform.scale(pygame.image.load('assets/sprites/bola-original.png').convert_alpha(), (34, 24)),
+    pygame.transform.scale(pygame.image.load('assets/sprites/bola-original.png').convert_alpha(), (34, 24))
 ]
 
 
