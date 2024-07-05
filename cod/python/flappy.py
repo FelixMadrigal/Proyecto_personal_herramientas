@@ -165,16 +165,16 @@ BEGIN_IMAGE = pygame.image.load('assets/sprites/message.png').convert_alpha()
 
 
 bird1_images = [
-    pygame.image.load('assets/sprites/bluebird-upflap.png').convert_alpha(),
-    pygame.image.load('assets/sprites/bluebird-midflap.png').convert_alpha(),
-    pygame.image.load('assets/sprites/bluebird-downflap.png').convert_alpha()
+    pygame.transform.scale(pygame.image.load('assets/sprites/bola2.png').convert_alpha(), (80, 60)),
+    pygame.transform.scale(pygame.image.load('assets/sprites/bola2.png').convert_alpha(), (80, 60)),
+    pygame.transform.scale(pygame.image.load('assets/sprites/bola2.png').convert_alpha(), (80, 60))
 ]
 
 # Se cargan imagenes para un segundo pajaro
 bird2_images = [
-    pygame.transform.scale(pygame.image.load('assets/sprites/bola-original.png').convert_alpha(), (34, 24)),
-    pygame.transform.scale(pygame.image.load('assets/sprites/bola-original.png').convert_alpha(), (34, 24)),
-    pygame.transform.scale(pygame.image.load('assets/sprites/bola-original.png').convert_alpha(), (34, 24))
+    pygame.transform.scale(pygame.image.load('assets/sprites/bola-original.png').convert_alpha(), (50, 35)),
+    pygame.transform.scale(pygame.image.load('assets/sprites/bola-original.png').convert_alpha(), (50, 35)),
+    pygame.transform.scale(pygame.image.load('assets/sprites/bola-original.png').convert_alpha(), (50, 35))
 ]
 
 
