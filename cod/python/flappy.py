@@ -1,3 +1,4 @@
+
 import pygame, random, time
 from pygame.locals import *
 
@@ -151,8 +152,13 @@ screen = pygame.display.set_mode((ancho_pantalla, altura_pantalla))
 #Titulo del juego
 pygame.display.set_caption('Flappy Bird')
 
+#assets/sprites/background-day.png
+
+
+
+
 #carga la imagen de fondo y la ajusta a las dimensiones
-BACKGROUND = pygame.image.load('assets/sprites/background-day.png')
+BACKGROUND = pygame.image.load('assets/sprites/imagen-fondo.png')
 BACKGROUND = pygame.transform.scale(BACKGROUND, (ancho_pantalla, altura_pantalla))
 #carga la imagen de inicio
 BEGIN_IMAGE = pygame.image.load('assets/sprites/message.png').convert_alpha()
